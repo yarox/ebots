@@ -10,7 +10,7 @@ class FFANN:
     network = FFANN(config, function)
 
     where config is a list containint how many neurons exist in each layer:
-    config = [2, 3] -> two layers; two neurons in the first one and three in the 
+    config = [2, 3] -> two layers; two neurons in the first one and three in the
     second.
     '''
 
