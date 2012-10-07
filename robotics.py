@@ -23,10 +23,9 @@ class IntervalRunner(threading.Thread):
 
 
 class BaseRobot:
-    def __init__(self, components, network, name='dummy'):
+    def __init__(self, components, name='dummy'):
         self.actuators = []
         self.sensors = []
-        self.network = network
         self.name = name
 
         self._create_devices(components)
@@ -52,7 +51,13 @@ class BaseRobot:
         thread.start()
 
 
-class ATRVRobot(BaseRobot):
+class NeuralRobot(BaseRobot):
+    def __init__(self, components, network, name='dummy'):
+        self.network = network
+        super(self.__class__, self).__init__(components, name)
+
+
+class ATRVRobot(NeuralRobot):
     def _execute(self):
         input = [min(sensor.read()['range_list']) for sensor in self.sensors]
         out0, out1 = self.network.eval(input)
