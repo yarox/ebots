@@ -5,6 +5,10 @@ import morsesim
 import time
 
 
+class RoboticsError(Exception):
+    pass
+
+
 class IntervalRunner(threading.Thread):
     def __init__(self, interval, steps, func, *args, **kwargs):
         self.interval = interval
@@ -37,8 +41,11 @@ class BaseRobot:
 
             if device is morsesim.Actuator:
                 self.actuators.append(device(name, port))
-            else:
+            elif device is morsesim.Sensor:
                 self.sensors.append(device(name, port))
+            else:
+                msg = 'device {0} does not exists.'.format(device)
+                raise RoboticsError(msg)
 
     def _execute(self):
         '''
