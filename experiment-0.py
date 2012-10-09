@@ -1,6 +1,4 @@
-import morsesim
-import robotics
-import neural
+from kinbots import morsesim, neural, robotics
 import numpy
 
 
