@@ -44,7 +44,7 @@ class BaseRobot:
             elif device is morsesim.Sensor:
                 self.sensors.append(device(name, port))
             else:
-                msg = 'device {0} does not exists.'.format(device)
+                msg = 'device {0} does not exists'.format(device)
                 raise RoboticsError(msg)
 
     def _execute(self):
