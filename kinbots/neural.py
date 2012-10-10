@@ -14,7 +14,7 @@ class FFANN:
     second.
     '''
 
-    def __init__(self, config, function):
+    def __init__(self, config, function, fill_with=random):
         self.f = function
 
         # take the config and pair its elements to create the shapes for the
@@ -22,10 +22,10 @@ class FFANN:
         # bias weights. add one to the second dimension to accomodate for the
         # bias input for the next layer.
         self.shapes = [config[i:i + 2] for i in range(len(config) - 1)]
-        self.layers = [random(size=(i + 1, j + 1)) for i, j in self.shapes[:-1]]
+        self.layers = [fill_with(size=(i + 1, j + 1)) for i, j in self.shapes[:-1]]
 
         i, j = self.shapes[-1]
-        self.layers.append(random(size=(i + 1, j)))
+        self.layers.append(fill_with(size=(i + 1, j)))
 
         self.elements = numpy.cumsum([(i + 1) * j for i, j in self.shapes])
 
