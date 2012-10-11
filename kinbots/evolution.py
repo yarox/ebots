@@ -1,7 +1,7 @@
 import random
 
 
-class DifferentialEvolution:
+class DifferentialEvolution(object):
     def __init__(self, F, CR, NP):
         self.F = F
         self.CR = CR

@@ -18,7 +18,7 @@ def get_components(filename):
     return [{key: components[key] for key in g} for k, g in groups]
 
 
-class Device:
+class Device(object):
     def __init__(self, name, port, host='localhost'):
         self.socket = None
         self.buffer = ''
@@ -37,6 +37,7 @@ class Device:
 
             try:
                 self.socket = socket.socket(af, socktype, proto)
+                print self.socket
             except socket.error:
                 raise
 
@@ -45,7 +46,7 @@ class Device:
             except socket.error:
                 self.socket.close()
                 self.socket = None
-                #raise
+                raise
             break
 
     def disconnect(self):
@@ -54,7 +55,7 @@ class Device:
 
 class Sensor(Device):
     def __init__(self, name, port, host='localhost'):
-        Device.__init__(self, name, port, host)
+        super(Sensor, self).__init__(name, port, host)
 
     def read(self):
         got_message = False
@@ -82,7 +83,7 @@ class Sensor(Device):
 
 class Actuator(Device):
     def __init__(self, name, port, host='localhost'):
-        Device.__init__(self, name, port, host)
+        super(Actuator, self).__init__(name, port, host)
 
     def write(self, msg):
         data_out = (json.dumps((msg)) + '\n').encode()

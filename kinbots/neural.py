@@ -5,7 +5,7 @@ import numpy
 random = partial(numpy.random.uniform, low=-1, high=1)
 
 
-class FFANN:
+class FFANN(object):
     '''
     network = FFANN(config, function)
 

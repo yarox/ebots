@@ -18,7 +18,7 @@ class IntervalRunner(threading.Thread):
         self.kwargs = kwargs
         self.args = args
 
-        threading.Thread.__init__(self)
+        super(IntervalRunner, self).__init__()
 
     def run(self):
         for i in range(self.steps):
@@ -26,7 +26,7 @@ class IntervalRunner(threading.Thread):
             time.sleep(self.interval)
 
 
-class BaseRobot:
+class BaseRobot(object):
     def __init__(self, components, name='dummy'):
         self.actuators = []
         self.sensors = []
@@ -54,14 +54,14 @@ class BaseRobot:
         pass
 
     def move(self, steps, interval):
-        thread = IntervalRunner(interval, steps, self.execute)
+        thread = IntervalRunner(interval, steps, self._execute)
         thread.start()
 
 
 class NeuralRobot(BaseRobot):
     def __init__(self, components, network, name='dummy'):
         self.network = network
-        super(self.__class__, self).__init__(components, name)
+        super(NeuralRobot, self).__init__(components, name)
 
 
 class ValentinoRobot(NeuralRobot):
