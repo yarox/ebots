@@ -64,7 +64,7 @@ class NeuralRobot(BaseRobot):
         super(self.__class__, self).__init__(components, name)
 
 
-class ATRVRobot(NeuralRobot):
+class ValentinoRobot(NeuralRobot):
     def _execute(self):
         input = [min(sensor.read()['range_list']) for sensor in self.sensors]
         out0, out1 = self.network.eval(input)
