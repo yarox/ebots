@@ -1,5 +1,5 @@
-# kinbots
-Exploring kin selection through robot simulation.
+# ebots
+Exploring evolutionary robotics through simulation.
 
 # References
 1. Wikipedia contributors, "Kin selection," Wikipedia, The Free Encyclopedia, [http://en.wikipedia.org/w/index.php?title=Kin_selection&oldid=510760461]() (accessed September 16, 2012).
