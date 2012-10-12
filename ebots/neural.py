@@ -45,6 +45,10 @@ class FFANN(object):
 
 
 class EvolvableFFANN(FFANN):
+    def __init__(self, config, function, fill_with=random):
+        self.fitness = 0
+        super(self.__class__, self).__init__(config, function, fill_with)
+
     def _getpos(self, key):
         if key >= self.elements[-1]:
             raise IndexError("list index out of range")
@@ -73,3 +77,9 @@ class EvolvableFFANN(FFANN):
     def __setitem__(self, key, value):
         i, x, y, n, m = self._getpos(key)
         self.layers[i][:, :m][x, y] = value
+
+    def __cmp__(self, other):
+        return cmp(self.fitness, other.fitness)
+
+    def __len__(self):
+        return self.elements[-1]
