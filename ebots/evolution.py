@@ -2,29 +2,24 @@ import random
 
 
 class DifferentialEvolution(object):
-    def __init__(self, F, CR, NP):
+    def __init__(self, F, CR, NP, Creator, *args, **kwargs):
         self.F = F
         self.CR = CR
         self.NP = NP
 
-        self.population = []
-        self.dimension = None
-
-    def create_population(self, Creator, kwargs):
         self.Creator = Creator
+        self.args = args
         self.kwargs = kwargs
 
-        for i in range(self.NP):
-            self.population.append(Creator(**kwargs))
-
-        self.dimension = len(self.population[0])
+        self.current = [Creator(*args, **kwargs) for i in range(NP)]
+        self.dimension = len(self.current[0])
 
     def recombine(self):
         self.candidates = []
 
-        for x in self.population:
-            a, b, c = random.sample(self.population, 3)
-            y = self.Creator(self.kwargs)
+        for x in self.current:
+            a, b, c = random.sample(self.current, 3)
+            y = self.Creator(*self.args, **self.kwargs)
 
             R = random.randint(0, self.NP - 1)
 
@@ -36,8 +31,9 @@ class DifferentialEvolution(object):
 
             self.candidates.append(y)
 
-    def evaluate(self):
-        pass
+    def select(self):
+        self.current = [max(current, candidate) for current, candidate in
+                           zip(self.current, self.candidates)]
 
-    def run(self, steps):
-        pass
+    def __getitem__(self, key):
+        return self.candidates[key]
