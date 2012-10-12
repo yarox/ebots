@@ -1,5 +1,5 @@
-from kinbots import morsesim, neural, robotics
-import numpy
+from ebots import morsesim, neural, robotics
+from numpy import tanh
 
 
 components = morsesim.get_components('morse-config')
@@ -9,8 +9,8 @@ steps = 150
 
 robots = []
 for i, block in enumerate(components):
-    network = neural.EvolvableFFANN(network_config, numpy.tanh)
-    robot = robotics.ValentinoRobot(block, network, 'robot_{0}'.format(i))
+    network = neural.EvolvableFFANN(network_config, tanh)
+    robot = robotics.ValentinoRobot(block, network, 'robot_{0}'.format(i), '192.168.1.11')
     robots.append(robot)
 
     print('{0} is ready!'.format(robot.name))
