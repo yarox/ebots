@@ -27,22 +27,23 @@ class IntervalRunner(threading.Thread):
 
 
 class BaseRobot(object):
-    def __init__(self, components, name='dummy'):
+    def __init__(self, components, name='dummy', host='localhost'):
         self.actuators = []
         self.sensors = []
         self.name = name
+        self.host = host
 
         self._create_devices(components)
 
     def _create_devices(self, components):
         for name, port in sorted(components.items()):
-            kind, id = name.split('_')
+            kind, sid, rid = name.split('_')
             device = getattr(morsesim, kind.title())
 
             if device is morsesim.Actuator:
-                self.actuators.append(device(name, port))
+                self.actuators.append(device(name, port, self.host))
             elif device is morsesim.Sensor:
-                self.sensors.append(device(name, port))
+                self.sensors.append(device(name, port, self.host))
             else:
                 msg = 'device {0} does not exists'.format(device)
                 raise RoboticsError(msg)
@@ -59,12 +60,30 @@ class BaseRobot(object):
 
 
 class NeuralRobot(BaseRobot):
-    def __init__(self, components, network, name='dummy'):
+    def __init__(self, components, network, name='dummy', host='localhost'):
         self.network = network
-        super(NeuralRobot, self).__init__(components, name)
+        super(NeuralRobot, self).__init__(components, name, host)
 
 
 class ValentinoRobot(NeuralRobot):
+    def _execute(self):
+        input = [min(sensor.read()['range_list']) for sensor in self.sensors]
+        out0, out1 = self.network.eval(input)
+
+        velocity = (out0 + out1) / 2
+        omega = (out0 - out1)
+
+        actuator = self.actuators[0]
+        actuator.write({'v': velocity, 'w': omega})
+
+        print(actuator.name, velocity, omega)
+
+
+class EnergyRobot(NeuralRobot):
+    def __init__(self, components, network, name='dummy', host='localhost'):
+        self.energy = 0
+        super(self.__class__, self).__init__(components, network, name, host)
+
     def _execute(self):
         input = [min(sensor.read()['range_list']) for sensor in self.sensors]
         out0, out1 = self.network.eval(input)

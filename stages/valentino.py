@@ -13,11 +13,11 @@ for i in range(num_robots):
     robot.rotate(z=i * 0.5)
 
     motion = Actuator('v_omega')
-    motion.name = 'actuator_{0}'.format(i)
+    motion.name = 'actuator_0_{0}'.format(i)
     devices.append(motion)
 
     sensorL = Sensor('sick-ld-mrs')
-    sensorL.name = 'sensor_L{0}'.format(i)
+    sensorL.name = 'sensor_L_{0}'.format(i)
     sensorL.translate(x=0.2, y=0.3, z=0.5)
     sensorL.rotate(z=0.523)
     sensorL.properties(Visible_arc=False, resolution=1, scan_window=60,
@@ -26,7 +26,7 @@ for i in range(num_robots):
     devices.append(sensorL)
 
     sensorR = Sensor('sick-ld-mrs')
-    sensorR.name = 'sensor_R{0}'.format(i)
+    sensorR.name = 'sensor_R_{0}'.format(i)
     sensorR.translate(x=0.2, y=-0.3, z=0.5)
     sensorR.rotate(z=-0.523)
     sensorR.properties(Visible_arc=False, resolution=1, scan_window=60,

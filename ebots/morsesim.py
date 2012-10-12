@@ -11,9 +11,9 @@ def get_components(filename):
 
     components = {device: int(port) for port, device in match}
 
-    f = lambda x: x[-1]
-    data = sorted(components.keys(), key=f)
-    groups = itertools.groupby(data, key=f)
+    robot_id = lambda x: x.rpartition('_')[-1]
+    data = sorted(components.keys(), key=robot_id)
+    groups = itertools.groupby(data, key=robot_id)
 
     return [{key: components[key] for key in g} for k, g in groups]
 
@@ -37,7 +37,6 @@ class Device(object):
 
             try:
                 self.socket = socket.socket(af, socktype, proto)
-                print self.socket
             except socket.error:
                 raise
 
