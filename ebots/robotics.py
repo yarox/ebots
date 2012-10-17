@@ -37,7 +37,7 @@ class BaseRobot(object):
 class NeuralRobot(BaseRobot):
     def __init__(self, components, network, name='dummy', host='localhost'):
         self.network = network
-        super(self.__class__, self).__init__(components, name, host)
+        super(NeuralRobot, self).__init__(components, name, host)
 
 
 class EnergyRobot(NeuralRobot):

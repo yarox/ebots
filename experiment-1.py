@@ -1,11 +1,10 @@
-from ebots import morsesim, neural, robotics, evolution
-from misc import generalized_logistic
-from functools import partial
+from ebots import morsesim, neural, robotics, evolution, misc
 from pymongo import Connection
+from functools import partial
 from numpy import mean
 
 
-logistic = partial(generalized_logistic, A=-5, K=5, B=1, nu=0.5, Q=0.5, M=0.5)
+logistic = partial(misc.generalized_logistic, A=-5, K=5, B=1, nu=0.5, Q=0.5, M=0.5)
 
 collection = Connection()['experiment1']['take_one']
 components = morsesim.get_components('morse-config')
