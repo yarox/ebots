@@ -1,8 +1,9 @@
-from functools import partial
+from misc import random
 import numpy
 
 
-random = partial(numpy.random.uniform, low=-1, high=1)
+class NeuralError(Exception):
+    pass
 
 
 class FFANN(object):
@@ -33,7 +34,7 @@ class FFANN(object):
         # include the bias.
         input = self.f(numpy.append(input, 1))
 
-        output = numpy.dot(input, self.layers[0])
+        output = self.f(numpy.dot(input, self.layers[0]))
         for layer in self.layers[1:]:
             output = self.f(numpy.dot(output, layer))
 
@@ -48,6 +49,18 @@ class EvolvableFFANN(FFANN):
     def __init__(self, config, function, fill_with=random):
         self.fitness = 0
         super(self.__class__, self).__init__(config, function, fill_with)
+
+    @property
+    def weights(self):
+        return [w for w in self]
+
+    @weights.setter
+    def weights(self, weights):
+        if len(self) != len(weights):
+            raise NeuralError('dimensions must be the same')
+
+        for i, w in enumerate(weights):
+            self[i] = w
 
     def _getpos(self, key):
         if key >= self.elements[-1]:
