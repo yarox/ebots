@@ -1,3 +1,4 @@
 *.pyc
 *.sublime-*
 morse-config
+.DS_Store
