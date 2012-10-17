@@ -12,6 +12,8 @@ class DifferentialEvolution(object):
         self.kwargs = kwargs
 
         self.current = [Creator(*args, **kwargs) for i in range(NP)]
+        self.candidates = [None for i in range(NP)]
+
         self.dimension = len(self.current[0])
 
     def recombine(self):
@@ -33,7 +35,7 @@ class DifferentialEvolution(object):
 
     def select(self):
         self.current = [max(current, candidate) for current, candidate in
-                           zip(self.current, self.candidates)]
+                        zip(self.current, self.candidates)]
 
     def __getitem__(self, key):
-        return self.candidates[key]
+        return self.current[key], self.candidates[key]

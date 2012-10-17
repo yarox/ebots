@@ -18,6 +18,10 @@ def get_components(filename):
     return [{key: components[key] for key in g} for k, g in groups]
 
 
+class MorsesimError(Exception):
+    pass
+
+
 class Device(object):
     def __init__(self, name, port, host='localhost'):
         self.socket = None
@@ -48,7 +52,7 @@ class Device(object):
                 raise
             break
 
-    def disconnect(self):
+    def __del__(self):
         self.socket.close()
 
 
@@ -63,7 +67,7 @@ class Sensor(Device):
             data = self.socket.recv(1024)
 
             if not data:
-                break
+                raise MorsesimError('socket connection broken')
 
             self.buffer += data.decode('utf-8')
             messages = self.buffer.split('\n')
@@ -86,4 +90,7 @@ class Actuator(Device):
 
     def write(self, msg):
         data_out = (json.dumps((msg)) + '\n').encode()
-        self.socket.send(data_out)
+        sent = self.socket.send(data_out)
+
+        if not sent:
+            raise MorsesimError('socket connection broken')
