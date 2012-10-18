@@ -17,7 +17,7 @@ Open two separate terminal sessions. In one execute:
 
 In the other:
 
-    python experimentX.py
+    python experiment-X.py
 
 # Experiments
 ## Experiment 1: Wall Follower
