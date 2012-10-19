@@ -57,9 +57,6 @@ class Device(object):
 
 
 class Sensor(Device):
-    def __init__(self, name, port, host='localhost'):
-        super(Sensor, self).__init__(name, port, host)
-
     def read(self):
         got_message = False
 
@@ -85,9 +82,6 @@ class Sensor(Device):
 
 
 class Actuator(Device):
-    def __init__(self, name, port, host='localhost'):
-        super(Actuator, self).__init__(name, port, host)
-
     def write(self, msg):
         data_out = (json.dumps((msg)) + '\n').encode()
         sent = self.socket.send(data_out)

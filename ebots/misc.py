@@ -35,7 +35,7 @@ def hinton(W, maxweight=None, ax=None):
 
     height, width = W.shape
 
-    if not maxweight:
+    if maxweight is None:
         maxweight = 2 ** numpy.ceil(numpy.log(numpy.max(numpy.abs(W))) / numpy.log(2))
 
     ax.fill(numpy.array([0, width, width, 0]),
