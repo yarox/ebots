@@ -1,5 +1,5 @@
 # ebots
-Exploring evolutionary robotics through simulation.
+Exploring evolutionary robotics through simulation experiments.
 
 # Dependencies
   + Python 2.7
@@ -11,13 +11,7 @@ Exploring evolutionary robotics through simulation.
   + MORSE 0.5.2
 
 # How to Run
-Open two separate terminal sessions. In one execute:
-
-    morse run stages/stage_name.py
-
-In the other:
-
-    python experiment-X.py
+Open two separate terminal sessions and go to the `ebots/` directory. In one terminal execute `morse run stages/stage_name.py`, and in the other `python experiment-X.py`. A Blender window containing the simulation should appear.
 
 # Experiments
 ## Experiment 1: Wall Follower
