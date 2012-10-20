@@ -23,7 +23,7 @@ class DifferentialEvolution(object):
             a, b, c = random.sample(self.current, 3)
             y = self.Creator(*self.args, **self.kwargs)
 
-            R = random.randint(0, self.NP - 1)
+            R = random.randint(0, self.dimension + 1)
 
             for i in range(self.dimension):
                 if (random.uniform(0, 1) < self.CR) or (i == R):
