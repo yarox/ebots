@@ -6,7 +6,7 @@ To follow a wall, or in a more general sense, to follow the contours of an objec
 
 The objective of this experiment is to build a robot capable of following walls, but instead of creating fixed rules telling the robot what to do, we will use a more flexible evolutionary approach.
 
-# Dependencies
+## Dependencies
 
 - Python 2.7
 - NumPy 1.6.2
@@ -16,7 +16,7 @@ The objective of this experiment is to build a robot capable of following walls,
 - Blender 2.63.a
 - MORSE 0.5.2
 
-# How to Run
+## How to Run
 
 Open two separate terminal sessions and go to the `ebots/` directory. In one terminal execute `morse run stages/stage_name.py`, and in the other `python experiment-X.py`. A Blender window containing the simulation should appear.
 
